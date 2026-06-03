@@ -384,6 +384,27 @@
 .certFoot { text-align: center; margin-top: 36px; }
 .certDisc { font-size: 12.5px; color: rgba(255,255,255,.6); line-height: 1.6; max-width: 720px; margin: 0 auto 20px; }
 
+/* 해외 직접계좌 패널 + 옵션 레벨 사다리 */
+.directPanel {
+  margin-top: 22px;
+  background: rgba(201,162,39,.07); border: 1px solid rgba(201,162,39,.28);
+  border-radius: var(--radius-lg); padding: 26px;
+}
+.directNote { font-size: 14px; line-height: 1.65; color: rgba(255,255,255,.86); margin-bottom: 18px; }
+.levelLadder { display: flex; flex-direction: column; gap: 8px; margin-bottom: 18px; }
+.levelRow {
+  display: flex; align-items: center; gap: 14px;
+  background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 12px; padding: 11px 14px;
+}
+.levelBadge {
+  flex: none; min-width: 52px; text-align: center; padding: 6px 10px; border-radius: 8px;
+  color: #fff; font-weight: 800; font-size: 13px; letter-spacing: .5px;
+}
+.levelAllow { font-size: 13.5px; line-height: 1.5; color: rgba(255,255,255,.9); }
+.directTiers { font-size: 13px; color: rgba(255,255,255,.78); line-height: 1.6; margin-bottom: 8px; }
+.directCaution { font-size: 12.5px; color: var(--gold-soft); line-height: 1.6; margin-bottom: 16px; }
+
 /* reveal 애니메이션 */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
 .revealIn { opacity: 1; transform: none; }
@@ -404,4 +425,15 @@
   .greekOut { grid-template-columns: repeat(5, 1fr); }
   .hero { padding: 48px 18px 56px; }
   .statRow { gap: 18px; }
+  /* 좁은 화면: 헤더 CTA 숨김(우하단 FAB로 대체) → 넘침 방지 */
+  .navCta { display: none; }
+  .navInner { padding: 11px 15px; }
+  .noticeBar { font-size: 12px; padding: 8px 14px; gap: 7px; }
+  /* 그릭 Lab — 모바일에서 5칸 그릭이 잘리지 않도록 압축 */
+  .labPanel { padding: 18px 16px; }
+  .greekOut { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 5px; }
+  .greekOutItem { padding: 9px 3px; }
+  .greekOutSym { font-size: 15px; }
+  .greekOutVal { font-size: 11px; }
+  .greekOutName { font-size: 9px; }
 }

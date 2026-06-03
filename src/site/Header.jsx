@@ -49,7 +49,7 @@ export default function Header({ theme, onToggleTheme, user, onLoginClick, onLog
           ) : (
             <button className={`${styles.btn} ${styles.btnGhost} ${styles.btnSm}`} onClick={onLoginClick}>로그인</button>
           )}
-          <button className={`${styles.btn} ${styles.btnGold} ${styles.btnSm}`} onClick={openDock}>
+          <button className={`${styles.btn} ${styles.btnGold} ${styles.btnSm} ${styles.navCta}`} onClick={openDock}>
             Δ GREEK 시작
           </button>
           <button className={`${styles.iconGhost} ${styles.menuBtn}`} onClick={() => setMenuOpen(m => !m)} aria-label="메뉴">☰</button>
