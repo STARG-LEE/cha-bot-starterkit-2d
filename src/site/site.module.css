@@ -242,6 +242,16 @@
 .explain b { color: var(--ink); }
 .quizFoot { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 22px; }
 
+/* 결과 — 오답 리뷰 */
+.reviewHead { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 8px 0 14px; font-size: 15px; font-weight: 800; color: var(--ink); }
+.reviewList { display: flex; flex-direction: column; gap: 12px; text-align: left; }
+.reviewItem { background: var(--bg-2); border: 1px solid var(--border); border-left: 3px solid var(--down); border-radius: 13px; padding: 15px 17px; }
+.reviewQ { font-size: 15px; font-weight: 700; color: var(--ink); line-height: 1.45; margin-bottom: 10px; }
+.reviewRow { font-size: 14px; line-height: 1.6; }
+.reviewBad { color: var(--down); }
+.reviewGood { color: var(--up); font-weight: 700; }
+.reviewExplain { font-size: 13px; color: var(--muted); line-height: 1.6; margin-top: 9px; padding-top: 9px; border-top: 1px dashed var(--border-strong); }
+
 /* ════════ GreeksLab ════════ */
 .greekCards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 50px; }
 .greekCard { text-align: center; cursor: pointer; padding: 22px 14px; }

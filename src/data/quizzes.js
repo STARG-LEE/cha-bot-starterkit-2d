@@ -166,3 +166,11 @@ export function quizAsk(q) {
   const correct = q.choices[q.answer]
   return `옵션 퀴즈 해설을 부탁해. 문제: "${q.q}" 정답은 "${correct}"인데, 왜 그런지 초보자도 이해되게 풀어서 설명해줘.`
 }
+
+// 결과 화면에서 틀린 문제 묶음을 GREEK에게 복습 요청
+export function quizReviewAsk(wrongList, topicLabel) {
+  const lines = wrongList.map((w, i) =>
+    `${i + 1}) ${w.q}\n   · 내가 고른 답: ${w.choices[w.picked]}\n   · 정답: ${w.choices[w.answer]}`
+  ).join('\n')
+  return `방금 "${topicLabel}" 이해도 퀴즈에서 틀린 문제들이야. 각 문제에서 내가 왜 틀렸고 정답이 왜 맞는지, 헷갈리는 개념을 콕 짚어서 복습시켜줘.\n\n${lines}`
+}
