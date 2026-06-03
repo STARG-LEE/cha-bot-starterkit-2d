@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { BotProvider } from './context/BotContext'
+import NoticeBar from './site/NoticeBar'
 import Header from './site/Header'
 import Landing from './site/Landing'
 import BotDock from './components/BotDock'
@@ -33,6 +34,7 @@ export default function App() {
 
   return (
     <BotProvider>
+      <NoticeBar />
       <Header
         theme={theme}
         onToggleTheme={toggleTheme}

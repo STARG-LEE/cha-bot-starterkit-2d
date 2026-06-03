@@ -340,6 +340,50 @@
 .presenters b { color: var(--gold-soft); font-family: 'Roboto Mono', monospace; }
 .disclaimer { font-size: 11.5px; color: rgba(255,255,255,.45); max-width: 560px; line-height: 1.6; margin-top: 18px; }
 
+/* ════════ 맨 위 공지 바 ════════ */
+.noticeBar {
+  display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;
+  padding: 9px 18px; background: var(--grad-navy); color: #fff;
+  font-size: 13.5px; border-bottom: 1px solid rgba(201,162,39,.35);
+}
+.noticeIcon { font-size: 15px; }
+.noticeText b { color: var(--gold-soft); }
+.noticeTag {
+  font-size: 10.5px; font-weight: 800; letter-spacing: .5px; color: #2b2200;
+  background: var(--grad-gold); padding: 2px 8px; border-radius: 999px; margin-left: 4px;
+}
+.noticeLink {
+  font-weight: 700; color: #0f1d3d; background: var(--gold-soft);
+  padding: 5px 12px; border-radius: 999px; font-size: 12.5px; transition: transform .15s ease;
+}
+.noticeLink:hover { transform: translateY(-1px); }
+.noticeMore { background: none; border: 1px solid rgba(255,255,255,.4); color: #fff; padding: 4px 11px; border-radius: 999px; font-size: 12.5px; font-weight: 600; }
+.noticeMore:hover { background: rgba(255,255,255,.12); }
+
+/* ════════ 거래 자격 안내 (navy 섹션) ════════ */
+.certCard {
+  background: rgba(255,255,255,.055); border: 1px solid rgba(255,255,255,.14);
+  border-radius: var(--radius-lg); padding: 26px;
+}
+.certHead { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; }
+.certFlag { font-size: 32px; line-height: 1; flex: none; }
+.certTitle { font-size: 19px; font-weight: 800; color: #fff; }
+.certBasis { font-size: 12.5px; color: var(--gold-soft); margin-top: 4px; font-weight: 600; }
+.certList { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+.certList li { font-size: 14px; line-height: 1.55; color: rgba(255,255,255,.86); padding-left: 24px; position: relative; }
+.certList li::before { content: '✓'; position: absolute; left: 0; color: var(--gold); font-weight: 800; }
+.certIssuer { font-size: 12.5px; color: rgba(255,255,255,.6); margin-bottom: 14px; }
+.certIssuer b { color: #fff; }
+.certLinks { display: flex; flex-wrap: wrap; gap: 9px; }
+.certLink {
+  display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 700;
+  color: var(--gold-soft); border: 1px solid rgba(201,162,39,.5); background: rgba(201,162,39,.1);
+  padding: 8px 14px; border-radius: 10px; transition: all .15s ease;
+}
+.certLink:hover { background: var(--grad-gold); color: #2b2200; border-color: transparent; transform: translateY(-2px); }
+.certFoot { text-align: center; margin-top: 36px; }
+.certDisc { font-size: 12.5px; color: rgba(255,255,255,.6); line-height: 1.6; max-width: 720px; margin: 0 auto 20px; }
+
 /* reveal 애니메이션 */
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
 .revealIn { opacity: 1; transform: none; }

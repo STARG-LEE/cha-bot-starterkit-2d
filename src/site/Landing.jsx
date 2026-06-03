@@ -1,5 +1,6 @@
 import styles from './site.module.css'
 import Hero from './Hero'
+import CertNotice from './CertNotice'
 import PainPoints from './PainPoints'
 import FeatureNav from './FeatureNav'
 import Roadmap from './Roadmap'
@@ -15,6 +16,7 @@ export default function Landing() {
   return (
     <main className={styles.page}>
       <Hero />
+      <CertNotice />
       <PainPoints />
       <FeatureNav onOpenBot={openDock} />
       <Roadmap />

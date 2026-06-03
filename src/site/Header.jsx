@@ -3,6 +3,7 @@ import styles from './site.module.css'
 import { useBot } from '../context/BotContext'
 
 const LINKS = [
+  { id: 'cert', label: '거래 자격' },
   { id: 'roadmap', label: '학습 로드맵' },
   { id: 'glossary', label: '용어집' },
   { id: 'quiz', label: '퀴즈' },
