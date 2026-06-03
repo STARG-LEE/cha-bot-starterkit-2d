@@ -60,11 +60,11 @@ export default function Hero() {
               </span>
             ))}
             <img className={styles.heroAvatar} src="/avatar2d/idle.png" alt="옵션 길잡이 GREEK 마스코트" draggable={false} />
-            <div className={styles.tickerCard} style={{ top: '14%', left: '-4%' }}>
+            <div className={styles.tickerCard} style={{ top: '13%', left: '5%' }}>
               <div className={styles.tickerLabel}>콜 델타 Δ</div>
               <div className={`${styles.tickerVal} num`}>+0.52 ▲</div>
             </div>
-            <div className={styles.tickerCard} style={{ bottom: '12%', right: '-5%' }}>
+            <div className={styles.tickerCard} style={{ bottom: '11%', right: '5%' }}>
               <div className={styles.tickerLabel}>세타 Θ / day</div>
               <div className={`${styles.tickerVal} ${styles.down} num`}>−1.84 ▼</div>
             </div>
