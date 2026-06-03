@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import styles from './site.module.css'
 import Reveal from './Reveal'
-import { EXAM_META, EXAM_QUESTIONS, examReviewAsk } from '../data/mockExam'
+import { EXAM_META, EXAM_QUESTIONS, examReviewAsk, examItemAsk } from '../data/mockExam'
 import { useBot } from '../context/BotContext'
 
 const KEYS = ['A', 'B', 'C', 'D', 'E']
@@ -142,13 +142,36 @@ export default function MockExam() {
                 ? `합격 기준 ${EXAM_META.passScore}점을 넘었어요. 틀린 ${wrong.length}문제만 GREEK과 복습하면 완벽해요.`
                 : `합격 기준 ${EXAM_META.passScore}점까지 ${EXAM_META.passScore - pct}점 남았어요. 틀린 문제를 GREEK과 복습해 봐요.`}
             </p>
-            <div className={styles.resultBtns}>
+            {wrong.length > 0 && (
+              <>
+                <div className={styles.reviewHead}>
+                  <span>📋 틀린 문제 {wrong.length}개</span>
+                  <button className={`${styles.btn} ${styles.btnGold} ${styles.btnSm}`} onClick={() => askGreek(examReviewAsk(wrong))}>
+                    💬 틀린 {wrong.length}문제 GREEK과 복습
+                  </button>
+                </div>
+                <div className={styles.reviewList}>
+                  {wrong.map((w, i) => {
+                    const my = answers[w.id]
+                    return (
+                      <div key={w.id} className={styles.reviewItem}>
+                        <div className={styles.reviewQ}>{i + 1}. {w.q} <span className={styles.examArea} style={{ display: 'inline', marginLeft: 6 }}>{w.area}</span></div>
+                        <div className={`${styles.reviewRow} ${styles.reviewBad}`}>✘ 내 답: {my !== undefined ? `${KEYS[my]}. ${w.choices[my]}` : '미응답'}</div>
+                        <div className={`${styles.reviewRow} ${styles.reviewGood}`}>✔ 정답: {KEYS[w.answer]}. {w.choices[w.answer]}</div>
+                        <div className={styles.reviewExplain}>{w.explain}</div>
+                        <button className={styles.askLink} style={{ marginTop: 8 }} onClick={() => askGreek(examItemAsk(w))}>💬 이 문제 GREEK에게</button>
+                      </div>
+                    )
+                  })}
+                </div>
+              </>
+            )}
+            <div className={styles.resultBtns} style={{ marginTop: 22 }}>
               <button className={`${styles.btn} ${styles.btnGhost} ${styles.btnSm}`} onClick={start}>다시 응시</button>
-              {wrong.length > 0 && (
-                <button className={`${styles.btn} ${styles.btnPrimary} ${styles.btnSm}`} onClick={() => askGreek(examReviewAsk(wrong))}>
-                  💬 틀린 {wrong.length}문제 GREEK과 복습
-                </button>
-              )}
+              <button className={`${styles.btn} ${styles.btnPrimary} ${styles.btnSm}`}
+                onClick={() => askGreek(`방금 옵션 모의고사에서 ${total}문제 중 ${correctCount}개를 맞춰 ${pct}점이 나왔어. 결과를 바탕으로 내가 보완하면 좋을 영역과 공부 방향을 짚어줘.`)}>
+                💬 GREEK에게 총평 받기
+              </button>
             </div>
           </Reveal>
         )}

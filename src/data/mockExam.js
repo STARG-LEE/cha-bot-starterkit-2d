@@ -141,3 +141,7 @@ export function examReviewAsk(wrongList) {
   const lines = wrongList.map((w, i) => `${i + 1}) ${w.q} (정답: ${w.choices[w.answer]})`).join('\n')
   return `방금 옵션 모의고사에서 틀린 문제들이야. 각각 왜 그 답이 정답인지 핵심만 짚어서 복습시켜줘.\n\n${lines}`
 }
+
+export function examItemAsk(q) {
+  return `옵션 모의고사 문제 해설 부탁해. 문제: "${q.q}" 정답은 "${q.choices[q.answer]}"인데, 왜 그게 정답인지 초보자도 이해되게 설명해줘.`
+}
