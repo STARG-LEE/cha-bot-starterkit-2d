@@ -1,0 +1,209 @@
+/* ════════ FAB (닫혀 있을 때) ════════ */
+.fab {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 18px 8px 8px;
+  border: none;
+  border-radius: 999px;
+  background: var(--grad-navy);
+  color: #fff;
+  box-shadow: var(--shadow-pop), 0 0 0 1px rgba(201,162,39,0.35);
+  transition: transform .25s ease, opacity .25s ease;
+}
+.fab:hover { transform: translateY(-3px); }
+.fabHidden { opacity: 0; transform: translateY(20px) scale(.9); pointer-events: none; }
+
+.fabAvatar {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 35%, #25406f, #0f1d3d);
+  display: grid; place-items: center;
+  overflow: hidden;
+  border: 2px solid var(--gold);
+  flex: none;
+}
+.fabAvatar img { width: 132%; height: 132%; object-fit: cover; object-position: 50% 16%; }
+.fabText { font-size: 14px; font-weight: 500; white-space: nowrap; letter-spacing: -.2px; }
+.fabText b { color: var(--gold-soft); font-weight: 800; }
+
+.fabBadge {
+  position: absolute; top: -4px; right: -2px;
+  min-width: 20px; height: 20px; padding: 0 6px;
+  border-radius: 10px; background: var(--down); color: #fff;
+  font-size: 12px; font-weight: 700; display: grid; place-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+.fabPulse {
+  position: absolute; left: 8px; top: 8px; width: 46px; height: 46px;
+  border-radius: 50%; border: 2px solid var(--gold);
+  animation: fabPulse 2.4s ease-out infinite; pointer-events: none;
+}
+@keyframes fabPulse {
+  0% { transform: scale(1); opacity: .55; }
+  70%,100% { transform: scale(1.9); opacity: 0; }
+}
+
+/* ════════ 백드롭 (모바일) ════════ */
+.backdrop {
+  position: fixed; inset: 0; z-index: 1090;
+  background: rgba(8, 14, 28, 0.45);
+  backdrop-filter: blur(2px);
+  opacity: 0; pointer-events: none; transition: opacity .3s ease;
+}
+
+/* ════════ 도크 패널 ════════ */
+.dock {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  z-index: 1100;
+  width: clamp(360px, 46vw, 600px);
+  display: flex;
+  flex-direction: column;
+  background: var(--bot-bg);
+  border-left: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-pop);
+  transform: translateX(105%);
+  transition: transform .34s cubic-bezier(.22,.61,.36,1);
+  will-change: transform;
+}
+.dockOpen { transform: translateX(0); }
+
+/* 헤더 */
+.header {
+  flex: none;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px; padding: 12px 14px;
+  background: var(--grad-navy);
+  color: #fff;
+}
+.headId { display: flex; align-items: center; gap: 11px; }
+.greekMark {
+  width: 40px; height: 40px; flex: none;
+  display: grid; place-items: center;
+  border-radius: 12px;
+  background: var(--grad-gold);
+  color: #2b2200; font-weight: 800; font-size: 22px;
+  font-family: 'Roboto Mono', monospace;
+  box-shadow: 0 4px 14px rgba(201,162,39,.4);
+}
+.headName { font-size: 16px; font-weight: 800; letter-spacing: .3px; }
+.headGr { font-size: 11px; color: var(--gold-soft); font-weight: 600; margin-left: 6px; letter-spacing: 2px; }
+.headStatus { font-size: 12px; opacity: .82; display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+.dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+.dotGreen { background: #38d39f; box-shadow: 0 0 7px #38d39f; }
+.dotBlue { background: #5aa9ff; box-shadow: 0 0 7px #5aa9ff; animation: blink 1s infinite; }
+@keyframes blink { 50% { opacity: .4; } }
+
+.headBtns { display: flex; gap: 4px; }
+.iconBtn {
+  width: 34px; height: 34px; border-radius: 9px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.08); color: #fff;
+  font-size: 15px; display: grid; place-items: center;
+  transition: background .15s ease;
+}
+.iconBtn:hover { background: rgba(255,255,255,.2); }
+
+/* 아바타 밴드 */
+.avatarBand {
+  flex: none; position: relative;
+  height: 168px;
+  background: linear-gradient(180deg, #16264c 0%, #0f1d3d 100%);
+  overflow: hidden;
+  display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+}
+.bandGlow {
+  position: absolute; top: -40px; left: 50%; transform: translateX(-50%);
+  width: 260px; height: 260px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(201,162,39,.32), transparent 62%);
+}
+.avatar { position: absolute; inset: 0 0 14px 0; width: 100%; height: 100%; }
+.bandCaption {
+  position: relative; z-index: 2;
+  font-size: 11.5px; color: rgba(255,255,255,.78);
+  background: rgba(8,14,28,.42); padding: 4px 12px; border-radius: 999px;
+  margin-bottom: 10px; backdrop-filter: blur(4px);
+}
+
+/* 메시지 */
+.messages {
+  flex: 1; min-height: 0; overflow-y: auto;
+  padding: 16px 14px 6px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.row { display: flex; gap: 8px; align-items: flex-end; }
+.rowUser { flex-direction: row-reverse; }
+.aiTag {
+  width: 28px; height: 28px; flex: none; border-radius: 8px;
+  background: var(--grad-gold); color: #2b2200;
+  font-family: 'Roboto Mono', monospace; font-weight: 800;
+  display: grid; place-items: center; font-size: 15px;
+}
+.bubble {
+  max-width: 78%; padding: 10px 13px; border-radius: 15px;
+  font-size: 14.5px; line-height: 1.62; white-space: pre-wrap; word-break: break-word;
+}
+.bubbleAi { background: var(--bot-bubble-ai); color: var(--text); border: 1px solid var(--border); border-bottom-left-radius: 5px; box-shadow: var(--shadow-sm); }
+.bubbleUser { background: var(--bot-bubble-me); color: #fff; border-bottom-right-radius: 5px; }
+
+.typing { display: inline-flex; gap: 4px; padding: 3px 0; }
+.typing i { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); animation: typing 1.2s infinite; }
+.typing i:nth-child(2) { animation-delay: .2s; }
+.typing i:nth-child(3) { animation-delay: .4s; }
+@keyframes typing { 0%,60%,100% { opacity: .3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+
+.suggestions { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 2px 36px; }
+.suggestChip {
+  padding: 8px 13px; border-radius: 999px;
+  border: 1px solid var(--border-strong); background: var(--surface); color: var(--navy);
+  font-size: 13px; font-weight: 500; transition: all .15s ease;
+}
+.suggestChip:hover { border-color: var(--gold); background: var(--bg-2); transform: translateY(-1px); }
+
+/* 입력 */
+.inputRow {
+  flex: none; display: flex; align-items: flex-end; gap: 8px;
+  padding: 10px 12px 4px;
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+.textarea {
+  flex: 1; resize: none; border: 1px solid var(--border-strong);
+  border-radius: 13px; padding: 11px 13px; font-size: 14.5px; line-height: 1.4;
+  background: var(--bg); color: var(--text); max-height: 110px;
+  font-family: inherit; outline: none; transition: border-color .15s ease;
+}
+.textarea:focus { border-color: var(--gold); }
+.textarea:disabled { opacity: .6; }
+.micBtn, .sendBtn {
+  flex: none; width: 42px; height: 42px; border-radius: 12px;
+  border: none; display: grid; place-items: center; font-size: 17px;
+  transition: transform .12s ease, background .15s ease;
+}
+.micBtn { background: var(--bg-2); color: var(--navy); border: 1px solid var(--border-strong); }
+.micBtn:hover { background: var(--border); }
+.micOn { background: var(--down); color: #fff; border-color: var(--down); animation: blink 1s infinite; }
+.sendBtn { background: var(--grad-navy); color: #fff; font-weight: 700; }
+.sendBtn:hover:not(:disabled) { transform: translateY(-2px); }
+.sendBtn:disabled { opacity: .45; }
+.spinner {
+  width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.35);
+  border-top-color: #fff; border-radius: 50%; animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.hint { flex: none; text-align: center; font-size: 10.5px; color: var(--muted); padding: 6px 12px 10px; background: var(--surface); }
+
+/* ════════ 모바일 ════════ */
+@media (max-width: 760px) {
+  .dock { width: 100vw; border-left: none; }
+  .backdropOn { opacity: 1; pointer-events: auto; }
+  .fab { right: 16px; bottom: 16px; padding: 7px 15px 7px 7px; }
+  .fabText { font-size: 13px; }
+  .avatarBand { height: 134px; }
+}

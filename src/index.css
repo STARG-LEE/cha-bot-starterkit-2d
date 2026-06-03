@@ -1,86 +1,112 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── Light theme (default) — beige + brown palette ── */
+/* ════════════════════════════════════════════════════════════
+   에브리옵션 with GREEK — 핀테크 팔레트
+   브랜드: 화이트 + 골드(마스코트) + 네이비 잉크 + 마켓 그린/레드
+   ════════════════════════════════════════════════════════════ */
+
 :root {
-  --bg:            #fdfaf3;       /* 채팅 패널과 통일된 웜 화이트 */
+  /* 브랜드 */
+  --navy:          #0f1d3d;   /* 잉크 네이비 (주색) */
+  --navy-soft:     #1c2f57;
+  --gold:          #c9a227;   /* 마스코트 골드 (강조) */
+  --gold-deep:     #a8851a;
+  --gold-soft:     #e7cf86;
+
+  /* 마켓 (콜/풋, 상승/하락) */
+  --up:            #11a36b;   /* 콜·상승 */
+  --down:          #e2483d;   /* 풋·하락 */
+
+  /* 표면/배경 (Light) */
+  --bg:            #f4f6fb;
+  --bg-2:          #eef1f8;
   --surface:       #ffffff;
-  --panel:         #fdfaf3;       /* 채팅 패널 */
-  --border:        rgba(139, 90, 43, 0.18);
-  --gold:          #b88a5e;
-  --gold-dim:      #8a6b52;
-  --text:          #3a2817;       /* 에스프레소 브라운 */
-  --muted:         #8a7560;       /* 웜 그레이 브라운 */
-  --blue:          #2563eb;
-  --green:         #16a34a;
+  --panel:         #ffffff;
+  --ink:           #0f1d3d;
+  --text:          #16223f;
+  --muted:         #5d6b82;
+  --border:        rgba(15, 29, 61, 0.10);
+  --border-strong: rgba(15, 29, 61, 0.18);
   --radius:        16px;
-  --scrollbar:     rgba(139, 90, 43, 0.28);
+  --radius-lg:     22px;
+  --scrollbar:     rgba(15, 29, 61, 0.22);
 
-  /* Stage(영상·아바타·음성·텍스트 카드) 표면 — 라이트 브라운 */
-  --card-bg-from:  #f4e6cf;       /* 매우 라이트한 베이지 탠 */
-  --card-bg-to:    #e0c8a4;       /* 따뜻한 라이트 탠 */
-  --media-bg:      #d4b896;       /* 라이트 브라운 (빈 비디오 스테이지) */
-  --stage-text:    #3a2817;       /* 라이트 브라운 위 에스프레소 텍스트 */
-  --stage-muted:   #6b4f33;       /* 중간 다크 브라운 */
+  /* 효과 */
+  --shadow-sm:     0 2px 10px rgba(15, 29, 61, 0.06);
+  --shadow-card:   0 16px 44px rgba(15, 29, 61, 0.12);
+  --shadow-pop:    0 24px 70px rgba(15, 29, 61, 0.22);
+  --glow-gold:     0 0 0 1px rgba(201,162,39,0.4), 0 10px 30px rgba(201,162,39,0.28);
 
-  --overlay-soft:  rgba(139, 90, 43, 0.06);
-  --overlay-track: rgba(139, 90, 43, 0.20);
-  --shadow-card:   0 18px 50px rgba(58, 40, 23, 0.14);
-  --shadow-media:  0 14px 42px rgba(58, 40, 23, 0.22);
+  /* 그라데이션 */
+  --grad-navy:     linear-gradient(135deg, #0f1d3d 0%, #1c2f57 55%, #24407a 100%);
+  --grad-gold:     linear-gradient(135deg, #e7cf86 0%, #c9a227 60%, #a8851a 100%);
+  --grad-hero:     radial-gradient(1200px 700px at 78% -10%, rgba(201,162,39,0.18), transparent 60%),
+                   radial-gradient(900px 600px at 8% 0%, rgba(36,64,122,0.16), transparent 55%);
 
-  /* Visualizer bars (warm earth tones for light theme) */
-  --bar-grad-1:    linear-gradient(to top, #8a6b52, #b88a5e 52%, #d4a574 82%, #f0d4a8);
-  --bar-grad-2:    linear-gradient(to top, #5c4530, #8a6b52 62%, #c9a878);
-  --bar-grad-3:    linear-gradient(to top, #7a5a3a, #b88a5e 58%, #e0c8a4);
-  --bar-grad-4:    linear-gradient(to top, #5c4530, #b88a5e 62%, #d4a574);
-  --bar-grad-5:    linear-gradient(to top, #b88a5e, #f0d4a8);
-  --bar-shadow:    0 0 7px rgba(184, 138, 94, 0.35);
-  --vis-glow:      drop-shadow(0 0 14px rgba(184, 138, 94, 0.32)) drop-shadow(0 0 28px rgba(139, 90, 43, 0.18));
+  /* 채팅/도크 */
+  --bot-bg:        #f7f9fd;
+  --bot-bubble-ai: #ffffff;
+  --bot-bubble-me: var(--navy);
 }
 
-/* ── Dark theme (opt-in via [data-theme="dark"]) ── */
+/* ── Dark theme ── */
 [data-theme="dark"] {
-  --bg:            #07080d;
-  --surface:       #0e1018;
-  --panel:         #13161f;
-  --border:        rgba(255,255,255,0.07);
-  --gold:          #c9a27e;
-  --gold-dim:      #8a6b52;
-  --text:          #e8e9ed;
-  --muted:         #5a6072;
-  --blue:          #3b82f6;
-  --green:         #22c55e;
-  --scrollbar:     rgba(255,255,255,0.12);
+  --navy:          #e8edf7;
+  --navy-soft:     #c7d2e6;
+  --gold:          #e7cf86;
+  --gold-deep:     #c9a227;
+  --gold-soft:     #f2e2ac;
+  --up:            #2fd08a;
+  --down:          #ff6b61;
 
-  --card-bg-from:  rgba(20,23,35,0.96);
-  --card-bg-to:    rgba(7,8,13,0.98);
-  --media-bg:      #0a0b10;
-  --stage-text:    #e8e9ed;
-  --stage-muted:   #5a6072;
+  --bg:            #070b16;
+  --bg-2:          #0b1224;
+  --surface:       #0f1730;
+  --panel:         #0f1730;
+  --ink:           #f1f4fb;
+  --text:          #e4e9f4;
+  --muted:         #8a98b6;
+  --border:        rgba(255,255,255,0.09);
+  --border-strong: rgba(255,255,255,0.16);
+  --scrollbar:     rgba(255,255,255,0.16);
 
-  --overlay-soft:  rgba(255,255,255,0.04);
-  --overlay-track: rgba(255,255,255,0.1);
-  --shadow-card:   0 24px 70px rgba(0,0,0,0.36);
-  --shadow-media:  0 0 60px rgba(0,0,0,0.6);
+  --shadow-sm:     0 2px 10px rgba(0,0,0,0.4);
+  --shadow-card:   0 16px 44px rgba(0,0,0,0.5);
+  --shadow-pop:    0 24px 70px rgba(0,0,0,0.6);
 
-  /* Visualizer bars (vibrant neon for dark theme) */
-  --bar-grad-1:    linear-gradient(to top, #22c55e, #22d3ee 52%, #8b5cf6 82%, #d946ef);
-  --bar-grad-2:    linear-gradient(to top, #2dd4bf, #3b82f6 62%, #8b5cf6);
-  --bar-grad-3:    linear-gradient(to top, #22c55e, #14b8a6 58%, #06b6d4);
-  --bar-grad-4:    linear-gradient(to top, #06b6d4, #2563eb 62%, #9333ea);
-  --bar-grad-5:    linear-gradient(to top, #8b5cf6, #d946ef);
-  --bar-shadow:    0 0 7px rgba(34, 211, 238, 0.32);
-  --vis-glow:      drop-shadow(0 0 14px rgba(34, 211, 238, 0.22)) drop-shadow(0 0 28px rgba(124, 58, 237, 0.12));
+  --grad-navy:     linear-gradient(135deg, #0b1224 0%, #111c39 55%, #16264c 100%);
+  --grad-hero:     radial-gradient(1200px 700px at 78% -10%, rgba(201,162,39,0.16), transparent 60%),
+                   radial-gradient(900px 600px at 8% 0%, rgba(36,64,122,0.28), transparent 55%);
+
+  --bot-bg:        #0b1224;
+  --bot-bubble-ai: #16213f;
+  --bot-bubble-me: #244a86;
 }
 
-html, body, #root {
-  height: 100%;
-  font-family: 'Noto Sans KR', -apple-system, sans-serif;
+html, body, #root { min-height: 100%; }
+
+body {
+  font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: var(--bg);
   color: var(--text);
-  overflow: hidden;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-::-webkit-scrollbar { width: 4px; }
+/* 숫자/그릭 기호용 — 트레이딩 터미널 느낌 */
+.mono, .num {
+  font-family: 'Roboto Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+::-webkit-scrollbar { width: 9px; height: 9px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 5px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
