@@ -100,18 +100,6 @@
 }
 
 /* ─── buttons ─── */
-.kakaoBtn {
-  width: 100%; padding: 13px;
-  border: none; border-radius: 10px;
-  background: #FEE500; color: #3C1E1E;
-  font-size: 14px; font-weight: 700;
-  cursor: pointer; font-family: inherit;
-  transition: all 0.2s;
-  margin-bottom: 8px;
-}
-.kakaoBtn:not(:disabled):hover { box-shadow: 0 4px 12px rgba(254,229,0,0.4); }
-.kakaoBtn:disabled { opacity: 0.4; cursor: not-allowed; }
-
 .emailBtn {
   width: 100%; padding: 12px;
   border: 1px solid #c9a27e; border-radius: 10px;

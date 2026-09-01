@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import styles from './AuthModal.module.css'
-import { emailLogin, emailSignup, startKakaoLogin } from '../lib/api'
+import { emailLogin, emailSignup } from '../lib/api'
 
 export default function AuthModal({ open, onClose, onSuccess }) {
   // 'choose' (메인) | 'email' (이메일 폼)
@@ -13,17 +13,16 @@ export default function AuthModal({ open, onClose, onSuccess }) {
   const [error, setError]       = useState('')
   const [loading, setLoading]   = useState(false)
 
-  // 동의 (필수 둘 + 선택 하나)
-  const [consentInfo, setConsentInfo]     = useState(false)  // 카카오 정보 제공 (필수)
+  // 동의 (필수 하나 + 선택 하나)
   const [consentPrivacy, setConsentPrivacy] = useState(false) // 개인정보 수집 (필수)
   const [consentMkt, setConsentMkt]       = useState(false)  // 마케팅 (선택)
 
-  const allRequired = consentInfo && consentPrivacy
-  const allConsents = consentInfo && consentPrivacy && consentMkt
+  const allRequired = consentPrivacy
+  const allConsents = consentPrivacy && consentMkt
 
   const toggleAll = () => {
     const v = !allConsents
-    setConsentInfo(v); setConsentPrivacy(v); setConsentMkt(v)
+    setConsentPrivacy(v); setConsentMkt(v)
   }
 
   // 모달 열릴 때 상태 리셋
@@ -37,18 +36,6 @@ export default function AuthModal({ open, onClose, onSuccess }) {
   }, [open])
 
   if (!open) return null
-
-  const handleKakao = async () => {
-    if (!allRequired) { setError('필수 동의 항목에 체크해 주세요.'); return }
-    setError(''); setLoading(true)
-    try {
-      const user = await startKakaoLogin()
-      onSuccess?.(user)
-      onClose?.()
-    } catch (e) {
-      setError(e.message || '카카오 로그인에 실패했어요.')
-    } finally { setLoading(false) }
-  }
 
   const handleEmail = async () => {
     setError('')
@@ -84,15 +71,11 @@ export default function AuthModal({ open, onClose, onSuccess }) {
             <span>전체 동의하기</span>
           </label>
           <label className={styles.consentItem}>
-            <input type="checkbox" checked={consentInfo} onChange={e => setConsentInfo(e.target.checked)} />
-            <span>카카오 계정 정보 제공 동의 <em>(필수)</em></span>
-          </label>
-          <label className={styles.consentItem}>
             <input type="checkbox" checked={consentPrivacy} onChange={e => setConsentPrivacy(e.target.checked)} />
             <span>개인정보 수집 및 이용 동의 <em>(필수)</em></span>
           </label>
           <p className={styles.consentDetail}>
-            수집항목: 이름·이메일·카카오 닉네임 · 이용목적: AI 챗봇 서비스 제공 · 보유기간: 서비스 이용 종료 시 파기
+            수집항목: 이름·이메일 · 이용목적: AI 챗봇 서비스 제공 · 보유기간: 서비스 이용 종료 시 파기
           </p>
           <label className={styles.consentItem}>
             <input type="checkbox" checked={consentMkt} onChange={e => setConsentMkt(e.target.checked)} />
@@ -104,13 +87,6 @@ export default function AuthModal({ open, onClose, onSuccess }) {
 
         {view === 'choose' && (
           <>
-            <button
-              className={styles.kakaoBtn}
-              onClick={handleKakao}
-              disabled={!allRequired || loading}
-            >
-              {loading ? '로그인 중…' : '카카오로 로그인'}
-            </button>
             <button
               className={styles.emailBtn}
               onClick={() => setView('email')}

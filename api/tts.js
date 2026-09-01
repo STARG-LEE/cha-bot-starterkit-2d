@@ -1,23 +1,26 @@
-// api/tts.js
-// TTS — 텍스트를 middleton OmniVoice 서버로 보내 음성(wav)을 받아 프론트로 돌려준다.
-// VRM 아바타 립싱크용. 기존 LiveAvatar SaaS가 묶어서 하던 TTS 기능을 대체한다.
-//
-// 흐름:
-//   프론트 { text, instruct? } (JSON)
-//     -> POST /api/tts
-//     -> middleton /omnivoice/v1/audio/speech (OpenAI 호환 /v1/audio/speech)
-//     -> audio/wav 바이너리
+// TTS — 텍스트를 음성(wav)으로 바꿔 프론트로 돌려준다.
 //
 // 프론트는 받은 wav를 재생하면서 동시에 Web Audio AnalyserNode로 분석해
-// VRM 입모양(viseme) blendshape를 구동한다 (Phase 3).
+// 아바타 입모양(viseme) blendshape를 구동한다.
+//
+// 업스트림 우선순위
+//   1) OMNI_URL          — 자체 TTS 서버(구 미들턴 omnivoice 규격). 설정된 경우만 사용.
+//   2) OPENAI_API_KEY    — OpenAI /v1/audio/speech 폴백.
+//   3) 둘 다 없으면 503  — 프론트는 음성 없이 텍스트 대화만 계속한다.
+//
+// 주: 2026-07 서버 재편으로 루멘에는 omnivoice 라우트가 없다. 자체 TTS를 다시
+// 붙이기 전까지는 OPENAI_API_KEY 를 넣어야 목소리가 나온다.
 
-const OMNI_URL =
-  process.env.OMNI_URL || 'https://middleton.p-e.kr/omnivoice/v1/audio/speech'
+const OMNI_URL = process.env.OMNI_URL || ''
 const OMNI_MODEL = process.env.OMNI_MODEL || 'omnivoice'
 // 기본 음성 — omnivoice instruct 어휘 (emo_manifest 검증값).
 // 본인 봇 톤에 맞춰 OMNI_INSTRUCT 환경변수로 쉽게 교체 가능.
 const OMNI_INSTRUCT =
   process.env.OMNI_INSTRUCT || 'female, young adult, moderate pitch, korean accent'
+
+const OPENAI_KEY = process.env.OPENAI_API_KEY || ''
+const OPENAI_TTS_MODEL = process.env.OPENAI_TTS_MODEL || 'gpt-4o-mini-tts'
+const OPENAI_TTS_VOICE = process.env.OPENAI_TTS_VOICE || 'shimmer'
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -35,23 +38,44 @@ export default async function handler(req, res) {
     const input = String(body.text || '').trim()
     if (!input) return res.status(400).json({ error: 'empty text' })
 
-    const upstream = await fetch(OMNI_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        model: OMNI_MODEL,
-        input,
-        voice: 'alloy', // omnivoice는 voice 무시, instruct로 음색 제어
-        response_format: 'wav',
-        language: 'ko',
-        instruct: body.instruct || OMNI_INSTRUCT,
-      }),
-    })
+    if (!OMNI_URL && !OPENAI_KEY) {
+      return res.status(503).json({
+        error: 'tts not configured',
+        detail: 'OMNI_URL 또는 OPENAI_API_KEY 를 설정하세요.',
+      })
+    }
+
+    const upstream = OMNI_URL
+      ? await fetch(OMNI_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: OMNI_MODEL,
+            input,
+            voice: 'alloy', // omnivoice는 voice 무시, instruct로 음색 제어
+            response_format: 'wav',
+            language: 'ko',
+            instruct: body.instruct || OMNI_INSTRUCT,
+          }),
+        })
+      : await fetch('https://api.openai.com/v1/audio/speech', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${OPENAI_KEY}`,
+          },
+          body: JSON.stringify({
+            model: OPENAI_TTS_MODEL,
+            input,
+            voice: OPENAI_TTS_VOICE,
+            response_format: 'wav',
+          }),
+        })
 
     if (!upstream.ok) {
       const detail = await upstream.text().catch(() => '')
       return res.status(502).json({
-        error: 'omnivoice upstream error',
+        error: 'tts upstream error',
         status: upstream.status,
         detail: detail.slice(0, 300),
       })

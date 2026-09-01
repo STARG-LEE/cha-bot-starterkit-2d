@@ -1,4 +1,7 @@
-// Team 봇 채팅 (batch JSON) — Middleton RAG+Gemma4 프록시
+// 봇 채팅 (batch JSON) — 루멘 Open-WebUI 프록시
+// 스트리밍은 chat-stream.js. 이 라우트는 호환용 폴백.
+
+import { callUpstream, stripThinking } from './_llm.js';
 
 export default async function handler(req, res) {
   if (req.method === 'OPTIONS') {
@@ -15,17 +18,17 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
 
   try {
-    // Team Edition: batch fallback to per-team Gemma4 endpoint (matches chat-stream.js).
-    const TEAM_ID = process.env.TEAM_ID || '00';
-    const UPSTREAM = process.env.ONPREMISE_CHAT_URL
-      || `https://middleton.p-e.kr/finbot/api/team/${TEAM_ID}/chat`;
-    const response = await fetch(UPSTREAM, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ message, history, images })
-    });
-    const data = await response.json();
-    return res.status(200).json(sanitizeResponse(data));
+    const upstream = await callUpstream({ message, history, images, stream: false });
+    if (!upstream.ok) {
+      const detail = await upstream.text().catch(() => '');
+      return res.status(502).json({
+        error: 'upstream status ' + upstream.status,
+        detail: detail.slice(0, 300),
+      });
+    }
+    const data = await upstream.json();
+    const reply = stripThinking(data?.choices?.[0]?.message?.content || '');
+    return res.status(200).json(sanitizeResponse({ reply, ttsReply: reply }));
   } catch (e) {
     return res.status(500).json({ error: e.message });
   }

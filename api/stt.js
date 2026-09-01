@@ -15,9 +15,10 @@
 // Vercel 기본 bodyParser 비활성화 — 오디오 바이너리를 그대로 받기 위함
 export const config = { api: { bodyParser: false } }
 
+const LUMEN_BASE = (process.env.LUMEN_BASE_URL || 'https://middleton.o-r.kr').replace(/\/+$/, '')
 const WHISPER_URL =
   process.env.WHISPER_URL ||
-  'https://middleton.p-e.kr/whisper/v1/audio/transcriptions'
+  `${LUMEN_BASE}/whisper/v1/audio/transcriptions`
 const WHISPER_MODEL =
   process.env.WHISPER_MODEL || 'deepdml/faster-whisper-large-v3-turbo-ct2'
 // Whisper prompt — 봇 도메인에 자주 등장하는 고유명사/전문용어를 환경변수로 주입하면

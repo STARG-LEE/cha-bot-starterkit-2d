@@ -1,7 +1,7 @@
 {
   "name": "cha-bot-starterkit-2d",
   "version": "0.1.0",
-  "description": "2D image-avatar edition of cha-bot-starterkit: PNG-based mascot avatar (no VRoid/3D) + server-side per-team RAG + Kakao login.",
+  "description": "2D image-avatar edition of cha-bot-starterkit: PNG-based mascot avatar (no VRoid/3D) + server-side per-team RAG.",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
