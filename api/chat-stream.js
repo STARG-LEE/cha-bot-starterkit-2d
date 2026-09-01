@@ -8,7 +8,7 @@
 //   data: [DONE]\n\n
 
 import { callUpstream } from './_llm.js'
-import { makeThinkFilter } from './_think.mjs'
+import { makeThinkFilter } from './_think.js'
 
 export const config = {
   // Node 함수 — Edge로 가도 OK 하지만 호환성 위해 Node 유지

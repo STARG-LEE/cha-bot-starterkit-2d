@@ -3,7 +3,7 @@
 // gemma4는 thinking 모델이라 답변 앞에 <think>…</think> 를 흘려보낸다.
 // 태그가 SSE 토큰 경계에 걸쳐 쪼개져 오는 경우가 실제 실패 사례라 그것까지 본다.
 import assert from 'node:assert/strict'
-import { makeThinkFilter } from './_think.mjs'
+import { makeThinkFilter } from './_think.js'
 
 // 한 청크 안에 통째로 들어온 경우
 {
