@@ -42,6 +42,9 @@ export default function BotDock() {
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth' }) }, [messages])
   useEffect(() => { if (userVideoRef.current) userVideoRef.current.srcObject = cameraStream || null }, [cameraStream, userVideoRef])
 
+  // 닫을 때 아바타(음성)도 멈춘다.
+  const handleClose = () => { try { interruptSpeaking && interruptSpeaking() } catch {} ; closeDock() }
+
   const submit = () => {
     const t = input.trim()
     if (!t || isProcessing) return
@@ -69,7 +72,7 @@ export default function BotDock() {
         <span className={styles.fabPulse} aria-hidden="true" />
       </button>
 
-      <div className={`${styles.backdrop} ${dockOpen ? styles.backdropOn : ''}`} onClick={closeDock} />
+      <div className={`${styles.backdrop} ${dockOpen ? styles.backdropOn : ''}`} onClick={handleClose} />
 
       {/* ── 도크 ── */}
       <aside className={`${styles.dock} ${dockOpen ? styles.dockOpen : ''}`} aria-hidden={!dockOpen}>
@@ -86,7 +89,7 @@ export default function BotDock() {
           </div>
           <div className={styles.headBtns}>
             <button className={styles.iconBtn} onClick={resetChat} title="대화 초기화">↻</button>
-            <button className={styles.iconBtn} onClick={closeDock} title="닫기" aria-label="도크 닫기">✕</button>
+            <button className={styles.iconBtn} onClick={handleClose} title="닫기" aria-label="도크 닫기">✕</button>
           </div>
         </header>
 

@@ -157,3 +157,4 @@ docs/_*
 # ─────────────────────────────────────────────
 public/avatar2d_live2d/*
 !public/avatar2d_live2d/HOWTO.txt
+.env*
